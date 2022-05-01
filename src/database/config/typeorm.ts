@@ -1,21 +1,21 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 const options: TypeOrmModuleOptions = {
-  type: 'mysql',
-  host: 'localhost',
-  port: 3306,
-  username: 'root',
-  password: 'root',
-  database: 'ferrari_review',
-  synchronize: true,
-  logging: true,
-  entities: ['./src/database/typeorm/entities/**/*.ts'],
-  migrations: ['./src/database//typeorm/migrations/**/*.ts'],
-  subscribers: ['./src/database//typeorm/subscribers/**/*.ts'],
+  type: process.env.DB_TYPE as any,
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  synchronize: Boolean(process.env.DB_SYNCHRONIZE),
+  logging: Boolean(process.env.DB_LOGGING),
+  entities: [process.env.DB_ENTITIES],
+  migrations: [process.env.DB_MIGRATIONS],
+  subscribers: [process.env.DB_SUBSCRIBERS],
   cli: {
-    entitiesDir: './src/database/typeorm/entities',
-    migrationsDir: './src/database/typeorm/migrations',
-    subscribersDir: './src/database/subscribers',
+    entitiesDir: process.env.DB_ENTITIES_DIR,
+    migrationsDir: process.env.DB_MIGRATIONS_DIR,
+    subscribersDir: process.env.DB_SUBSCRIBERS_DIR,
   },
 };
 
