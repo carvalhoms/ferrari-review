@@ -10,8 +10,11 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async get(id: number) {
+    // Converte o id em string vindo no método get para número
+    id = Number(id);
+
     // Verificando se o id é numérico, se não for exibe erro
-    if (isNaN(Number(id))) {
+    if (isNaN(id)) {
       throw new BadRequestException('Id is required');
     }
 
