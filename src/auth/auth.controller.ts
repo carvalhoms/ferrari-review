@@ -1,7 +1,17 @@
-import { Controller } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { Body, Controller, Post } from '@nestjs/common';
+import { UserService } from 'src/user/user.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private userService: UserService) {}
+
+  @Post()
+  async verifyEmail(@Body('email') email) {
+    try {
+      await this.userService.getByEmail(email);
+      return { exists: true };
+    } catch (e) {
+      return { exists: false };
+    }
+  }
 }
