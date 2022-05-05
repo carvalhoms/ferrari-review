@@ -1,4 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
+import { parse } from 'date-fns';
 import { UserService } from 'src/user/user.service';
 
 @Controller('auth')
@@ -13,5 +14,32 @@ export class AuthController {
     } catch (e) {
       return { exists: false };
     }
+  }
+
+  @Post('register')
+  async register(
+    @Body('name') name,
+    @Body('email') email,
+    @Body('password') password,
+    @Body('birthAt') birthAt,
+    @Body('phone') phone,
+    @Body('document') document,
+  ) {
+    if (birthAt) {
+      try {
+        birthAt = parse(birthAt, 'yyyy-MM-dd', new Date());
+      } catch (e) {
+        throw new BadRequestException('Birth date is invalid');
+      }
+    }
+
+    return this.userService.create({
+      name,
+      email,
+      password,
+      birthAt,
+      phone,
+      document,
+    });
   }
 }
