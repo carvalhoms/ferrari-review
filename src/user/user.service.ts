@@ -1,7 +1,7 @@
 import {
-  BadGatewayException,
   BadRequestException,
   Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
@@ -11,7 +11,7 @@ import { Prisma } from '@prisma/client';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async get(id: number) {
+  async get(id: number, hash = false) {
     id = Number(id);
 
     if (isNaN(id)) {
@@ -27,10 +27,12 @@ export class UserService {
       },
     });
 
-    delete user.password;
+    if (!hash) {
+      delete user.password;
+    }
 
     if (!user) {
-      throw new BadGatewayException('User not found');
+      throw new BadRequestException('User not found');
     }
 
     return user;
@@ -53,7 +55,7 @@ export class UserService {
     delete user.password;
 
     if (!user) {
-      throw new BadGatewayException('User not found');
+      throw new BadRequestException('User not found');
     }
 
     return user;
@@ -189,5 +191,19 @@ export class UserService {
     }
 
     return this.get(id);
+  }
+
+  async checkPassword(id: number, password: string) {
+    const user = await this.get(id, true);
+
+    user.password;
+
+    const checked = await bcrypt.compare(password, user.password);
+
+    if (!checked) {
+      throw new UnauthorizedException('Email or passsword is incorrect');
+    }
+
+    return true;
   }
 }
