@@ -9,13 +9,13 @@ const options: TypeOrmModuleOptions = {
   database: process.env.DB_DATABASE,
   synchronize: Boolean(process.env.DB_SYNCHRONIZE),
   logging: Boolean(process.env.DB_LOGGING),
-  entities: [process.env.DB_ENTITIES],
-  migrations: [process.env.DB_MIGRATIONS],
-  subscribers: [process.env.DB_SUBSCRIBERS],
+  entities: [__dirname + '/entity/*{.js,.ts}'],
+  migrations: [__dirname + '/migration/*{.js,.ts}'],
+  subscribers: [__dirname + '/subscriber/*{.js,.ts}'],
   cli: {
-    entitiesDir: process.env.DB_ENTITIES_DIR,
-    migrationsDir: process.env.DB_MIGRATIONS_DIR,
-    subscribersDir: process.env.DB_SUBSCRIBERS_DIR,
+    entitiesDir: './entity',
+    migrationsDir: './migration',
+    subscribersDir: './subscriber',
   },
 };
 

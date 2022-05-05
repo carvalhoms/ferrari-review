@@ -32,6 +32,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.0.3",
     "@prisma/client": "^3.13.0",
+    "bcrypt": "^5.0.1",
     "date-fns": "^2.28.0",
     "mysql2": "^2.3.3",
     "reflect-metadata": "^0.1.13",
