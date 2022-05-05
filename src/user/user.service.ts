@@ -25,6 +25,8 @@ export class UserService {
       },
     });
 
+    delete user.password;
+
     if (!user) {
       throw new BadGatewayException('User not found');
     }
@@ -45,6 +47,8 @@ export class UserService {
         persons: true,
       },
     });
+
+    delete user.password;
 
     if (!user) {
       throw new BadGatewayException('User not found');
@@ -94,7 +98,7 @@ export class UserService {
       throw new BadRequestException('Email already exists.');
     }
 
-    return this.prisma.users.create({
+    const userCreated = await this.prisma.users.create({
       data: {
         persons: {
           create: {
@@ -111,5 +115,9 @@ export class UserService {
         persons: true,
       },
     });
+
+    delete userCreated.password;
+
+    return userCreated;
   }
 }
