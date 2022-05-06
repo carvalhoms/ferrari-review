@@ -2,6 +2,7 @@ import { MailService } from './mail.service';
 import { Module } from '@nestjs/common';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
+import { resolve } from 'path';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
           from: `Ferrari review <${process.env.MAIL_FROM}>`,
         },
         template: {
-          dir: __dirname + '/templates',
+          dir: resolve(__dirname, 'templates'),
           adapter: new PugAdapter(),
           options: {
             strict: true,
