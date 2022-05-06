@@ -206,4 +206,37 @@ export class UserService {
 
     return true;
   }
+
+  async updatePassword(id: number, passsword: string) {
+    const user = await this.get(id);
+
+    const userUpdated = await this.prisma.users.update({
+      where: {
+        id,
+      },
+      data: {
+        password: bcrypt.hashSync(passsword, 10),
+      },
+      include: {
+        persons: true,
+      },
+    });
+
+    delete userUpdated.password;
+
+    return userUpdated;
+  }
+
+  async changePassword(
+    id: number,
+    currentPassword: string,
+    newPassword: string,
+  ) {
+    if (!newPassword) {
+      throw new BadRequestException('New password is required');
+    }
+    await this.checkPassword(id, currentPassword);
+
+    return this.updatePassword(id, newPassword);
+  }
 }
