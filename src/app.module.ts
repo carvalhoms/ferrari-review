@@ -1,3 +1,4 @@
+import { MailModule } from './mail/mail.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -7,7 +8,13 @@ import { AuthModule } from './auth/auth.module';
 import * as typeOrmConfig from '../database/typeorm/typeorm';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeOrmConfig), PrismaModule, UserModule, AuthModule],
+  imports: [
+    MailModule,
+    TypeOrmModule.forRoot(typeOrmConfig),
+    PrismaModule,
+    UserModule,
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [],
 })
