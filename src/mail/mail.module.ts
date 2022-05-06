@@ -1,6 +1,7 @@
 import { MailService } from './mail.service';
 import { Module } from '@nestjs/common';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 
 @Module({
   imports: [
@@ -18,10 +19,18 @@ import { MailerModule } from '@nestjs-modules/mailer';
         defaults: {
           from: `Ferrari review <${process.env.MAIL_FROM}>`,
         },
+        template: {
+          dir: __dirname + '/templates',
+          adapter: new PugAdapter(),
+          options: {
+            strict: true,
+          },
+        },
       }),
     }),
   ],
   controllers: [],
   providers: [MailService],
+  exports: [MailService],
 })
 export class MailModule {}
