@@ -37,4 +37,10 @@ export class AuthService {
 
     return this.jwtService.decode(token);
   }
+
+  async recovery(email: string) {
+    const { id } = await this.userService.getByEmail(email);
+
+    const token = this.jwtService.sign({ id }, { expiresIn: 30 * 60 });
+  }
 }

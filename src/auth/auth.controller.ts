@@ -97,4 +97,9 @@ export class AuthController {
   ) {
     return this.userService.changePassword(id, currentPassword, newPassword);
   }
+
+  @Post('forget')
+  async forget(@Body('email') email) {
+    return this.authService.recovery(email);
+  }
 }
