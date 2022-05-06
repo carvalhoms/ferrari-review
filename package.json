@@ -27,6 +27,7 @@
     "postmigrate:down": "npm run prisma:update"
   },
   "dependencies": {
+    "@nestjs-modules/mailer": "^1.6.1",
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/jwt": "^8.0.0",
@@ -36,6 +37,7 @@
     "bcrypt": "^5.0.1",
     "date-fns": "^2.28.0",
     "mysql2": "^2.3.3",
+    "nodemailer": "^6.7.5",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
