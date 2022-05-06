@@ -5,6 +5,7 @@ import {
   Get,
   Headers,
   Post,
+  Put,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -75,5 +76,15 @@ export class AuthController {
       auth,
       user,
     };
+  }
+
+  @UseGuards(AuthGuard)
+  @Put('profile')
+  async profile(@User() user, @Body() body) {
+    if (body.birthAt) {
+      body.birthAt = parse(body.birthAt, 'yyyy-MM-dd', new Date());
+    }
+
+    return this.userService.update(user.id, body);
   }
 }
