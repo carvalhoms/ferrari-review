@@ -93,6 +93,15 @@ export class AuthService {
       throw new BadRequestException('Token used');
     }
 
+    await this.prisma.password_recovery.update({
+      where: {
+        id: passwordRecovery.id,
+      },
+      data: {
+        resetAt: new Date(),
+      },
+    });
+
     return this.userService.updatePassword(passwordRecovery.userId, password);
   }
 }
