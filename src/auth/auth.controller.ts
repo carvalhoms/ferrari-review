@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Req,
+  UploadedFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -120,7 +121,7 @@ export class AuthController {
     }),
   )
   @Put('photo')
-  async setPhoto(@User() user) {
-    return {};
+  async setPhoto(@User() user, @UploadedFile() file) {
+    return this.userService.setPhoto(user.id, file);
   }
 }
