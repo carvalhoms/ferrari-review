@@ -3,10 +3,10 @@ import {
   Body,
   Controller,
   Get,
-  Headers,
   Post,
   Put,
-  Req,
+  Res,
+  StreamableFile,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -121,7 +121,24 @@ export class AuthController {
     }),
   )
   @Put('photo')
-  async setPhoto(@User() user, @UploadedFile() file) {
+  async setPhoto(@User() user, @UploadedFile() file: Express.Multer.File) {
     return this.userService.setPhoto(user.id, file);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('photo')
+  async getPhoto(@User('id') id, @Res({ passthrough: true }) response) {
+    const { file, extension } = await this.userService.getPhoto(id);
+
+    switch (extension) {
+      case 'png':
+        response.set({ 'Content-Type': 'image/png' });
+        break;
+      case 'jpg':
+        response.set({ 'Content-Type': 'image/jpeg' });
+        break;
+    }
+
+    return new StreamableFile(file);
   }
 }
