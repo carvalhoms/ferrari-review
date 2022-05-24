@@ -1,4 +1,17 @@
-import { Controller } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 
-@Controller()
-export class ContactController {}
+@Controller('contacts')
+export class ContactController {
+  @Post()
+  async create(
+    @Body('name') name,
+    @Body('email') email,
+    @Body('message') message,
+  ) {
+    return {
+      name,
+      email,
+      message,
+    };
+  }
+}
