@@ -55,7 +55,7 @@ export class ContactService {
           },
         });
 
-        personId = Number(newPerson);
+        personId = Number(newPerson.id);
       }
     }
 
