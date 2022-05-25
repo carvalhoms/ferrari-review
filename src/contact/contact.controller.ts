@@ -11,10 +11,10 @@ export class ContactController {
     @Body('email') email,
     @Body('message') message,
   ) {
-    this.contactService.create({
-      message,
+    return this.contactService.create({
       name,
       email,
+      message,
     });
   }
 }
