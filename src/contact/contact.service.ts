@@ -3,7 +3,15 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ContactService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
+
+  async list() {
+    return this.prisma.contacts.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+  }
 
   async create({
     name,
@@ -28,7 +36,7 @@ export class ContactService {
 
     let personId: number;
 
-    const user = await this.prismaService.users.findUnique({
+    const user = await this.prisma.users.findUnique({
       where: {
         email,
       },
@@ -40,7 +48,7 @@ export class ContactService {
     if (user) {
       personId = Number(user.personId);
     } else {
-      const contact = await this.prismaService.contacts.findFirst({
+      const contact = await this.prisma.contacts.findFirst({
         where: {
           email,
         },
@@ -49,7 +57,7 @@ export class ContactService {
       if (contact) {
         personId = Number(contact.personId);
       } else {
-        const newPerson = await this.prismaService.persons.create({
+        const newPerson = await this.prisma.persons.create({
           data: {
             name,
           },
@@ -59,7 +67,7 @@ export class ContactService {
       }
     }
 
-    return this.prismaService.contacts.create({
+    return this.prisma.contacts.create({
       data: {
         personId,
         email,
