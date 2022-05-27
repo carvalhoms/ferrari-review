@@ -1,3 +1,4 @@
+import { TimeOptionsModule } from './time-option/time-options.module';
 import { ContactModule } from './contact/contact.module';
 import { MailModule } from './mail/mail.module';
 import { Module } from '@nestjs/common';
@@ -10,6 +11,7 @@ import * as typeOrmConfig from '../database/typeorm/typeorm';
 
 @Module({
   imports: [
+    TimeOptionsModule,
     ContactModule,
     MailModule,
     TypeOrmModule.forRoot(typeOrmConfig),
