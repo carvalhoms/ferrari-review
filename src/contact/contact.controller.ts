@@ -10,6 +10,11 @@ export class ContactController {
     return this.contactService.list();
   }
 
+  @Get(':id')
+  async show(@Param('id') id) {
+    return this.contactService.get(Number(id));
+  }
+
   @Post()
   async create(
     @Body('name') name,
