@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ContactService } from './contact.service';
 
 @Controller('contacts')
@@ -21,5 +21,10 @@ export class ContactController {
       email,
       message,
     });
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id) {
+    return this.contactService.delete(Number(id));
   }
 }

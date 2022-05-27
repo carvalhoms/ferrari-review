@@ -75,4 +75,18 @@ export class ContactService {
       },
     });
   }
+
+  async delete(id: number) {
+    id = Number(id);
+
+    if (isNaN(id)) {
+      throw new BadRequestException('Id is invalid');
+    }
+
+    return this.prisma.contacts.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }
