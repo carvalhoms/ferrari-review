@@ -8,6 +8,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ServicesModule } from './services/services.module';
+import { AddressModule } from './address/address.module';
 import * as typeOrmConfig from '../database/typeorm/typeorm';
 
 @Module({
@@ -20,6 +21,7 @@ import * as typeOrmConfig from '../database/typeorm/typeorm';
     UserModule,
     AuthModule,
     ServicesModule,
+    AddressModule,
   ],
   controllers: [AppController],
   providers: [],
